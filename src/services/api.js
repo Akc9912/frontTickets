@@ -197,12 +197,14 @@ const MOCK_DATA = {
       CERRADO: 8,
     },
     ticketsPorPrioridad: {
+      // no va
       CRITICA: 2,
       ALTA: 8,
       MEDIA: 35,
       BAJA: 111,
     },
     ticketsPorCategoria: {
+      // no va
       SOFTWARE: 75,
       HARDWARE: 45,
       NETWORK: 20,
@@ -211,16 +213,12 @@ const MOCK_DATA = {
   },
 };
 
-/**
- * Obtiene el token de autenticación desde localStorage
- */
+// Obtener el token de autenticación desde localStorage
 const getAuthToken = () => {
   return localStorage.getItem("authToken");
 };
 
-/**
- * Configuración de headers por defecto
- */
+// Configuración de headers por defecto
 const getHeaders = (includeAuth = true) => {
   const headers = {
     "Content-Type": "application/json",
@@ -236,9 +234,7 @@ const getHeaders = (includeAuth = true) => {
   return headers;
 };
 
-/**
- * Manejo de respuestas HTTP
- */
+// Manejo de respuestas HTTP
 const handleResponse = async (response) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
@@ -255,9 +251,8 @@ const handleResponse = async (response) => {
   return response.json();
 };
 
-/**
- * Función genérica para hacer peticiones HTTP
- */
+// Función genérica para hacer peticiones HTTP
+
 const makeRequest = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
   const config = {
@@ -274,14 +269,10 @@ const makeRequest = async (endpoint, options = {}) => {
   }
 };
 
-// ================================
-// 🔐 AUTENTICACIÓN
-// ================================
+//  AUTENTICACIÓN
 
 export const authAPI = {
-  /**
-   * Iniciar sesión
-   */
+  // Iniciar sesión
   login: async (credentials) => {
     return makeRequest("/auth/login", {
       method: "POST",
@@ -290,23 +281,17 @@ export const authAPI = {
     });
   },
 
-  /**
-   * Cerrar sesión (limpia el token local)
-   */
+  // Cerrar sesión (limpia el token local)
   logout: () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
   },
 };
 
-// ================================
-// 🎫 GESTIÓN DE TICKETS
-// ================================
+// GESTIÓN DE TICKETS
 
 export const ticketsAPI = {
-  /**
-   * Obtener lista de tickets
-   */
+  // Obtener lista de tickets
   getAll: async () => {
     if (DEVELOPMENT_MODE) {
       // Simular delay de red
@@ -316,9 +301,7 @@ export const ticketsAPI = {
     return makeRequest("/tickets");
   },
 
-  /**
-   * Obtener ticket por ID
-   */
+  // Obtener ticket por ID
   getById: async (id) => {
     if (DEVELOPMENT_MODE) {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -329,9 +312,7 @@ export const ticketsAPI = {
     return makeRequest(`/tickets/${id}`);
   },
 
-  /**
-   * Crear nuevo ticket
-   */
+  // Crear nuevo ticket
   create: async (ticketData) => {
     if (DEVELOPMENT_MODE) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -357,9 +338,7 @@ export const ticketsAPI = {
     });
   },
 
-  /**
-   * Actualizar ticket
-   */
+  // Actualizar ticket
   update: async (id, updateData) => {
     if (DEVELOPMENT_MODE) {
       await new Promise((resolve) => setTimeout(resolve, 700));
@@ -382,9 +361,7 @@ export const ticketsAPI = {
     });
   },
 
-  /**
-   * Eliminar ticket
-   */
+  // Eliminar ticket
   delete: async (id) => {
     if (DEVELOPMENT_MODE) {
       await new Promise((resolve) => setTimeout(resolve, 600));
@@ -403,9 +380,7 @@ export const ticketsAPI = {
   },
 };
 
-// ================================
-// 👥 GESTIÓN DE USUARIOS
-// ================================
+// GESTIÓN DE USUARIOS
 
 export const usersAPI = {
   /**
